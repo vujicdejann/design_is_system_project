@@ -1,0 +1,94 @@
+<?php
+define('CSS_PATH', 'assets/css/'); //define CSS path 
+define('JS_PATH', 'assets/js/'); //define JavaScript path 
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH; ?>style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="assets/css/fav-icon.png">
+    <title>Moj nalog</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light bg-opacity-75">
+    <a class="navbar-brand" href="#">Informacioni sistem</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="index.php">Status proizvodnje</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="production.php">Proizvodi</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="supplier.php">Dobavljači</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="warehouse.php">Magacin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="my-acc.php">Moj nalog</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-danger" href="logout.php">Odjava iz sistema</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  
+      <div class="col-sm-12 col-md-10 col-lg-8 mx-auto table-margin">
+        <table class="table table-responsive bg-light bg-opacity-75">
+            <?php
+              include_once("./connection.php");
+              $i = 1;
+              $statement = $pdo->prepare(
+                "SELECT * FROM users WHERE userID = $_SESSION[userID]"
+              );
+              $statement->execute();
+              $data = $statement->fetchAll();
+              foreach($data as $d) 
+              {
+            ?>
+          <thead>
+            <tr class="">
+              <th scope="col">Korisničko ime: <br> <?php echo $d['username']; ?></th> 
+            </tr>
+            <tr class="">
+              <th scope="col">Tip naloga <br> <?php echo $d['typeUser']; ?></th>
+            </tr>  
+            <tr class="">
+              <th scope="col">Ime i prezime: <br> <?php echo $d['name']; ?></th>  
+            </tr>  
+            <tr class="">  
+              <th scope="col">Kontakt telefon <br> <?php echo $d['phone']; ?></th>
+            </tr>  
+            <tr class="">
+                <th scope="col">Adresa <br> <?php echo $d['address']; ?></th>
+            </tr>    
+            <tr class="">
+                <th scope="col">Mejl adresa <br> <?php echo $d['email']; ?></th>
+            </tr>
+            <tr class="">
+                <th scope="col">Pozicija rada <br> <?php echo $d['position']; ?></th>
+            </tr>
+          </thead>
+          <tbody>
+           <?php
+          }
+           ?>
+          </tbody>
+        </table>
+      </div>
+
+    <script src="https://use.fontawesome.com/19a88979d4.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script></body>
+</html>
